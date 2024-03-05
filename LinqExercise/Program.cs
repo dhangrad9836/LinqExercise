@@ -40,7 +40,12 @@ namespace LinqExercise
             numbers.Where(x => x > 6).ToList().ForEach(x => Console.WriteLine(x));
 
             Console.WriteLine("Ordered numbers");
-            //TODO: Order numbers in any order (ascending or desc) but only print 4 of them **foreach loop only!**
+            //TODO: Order numbers in any order (ascending or desc) but only print 4 of them
+            //**foreach loop only!**
+            
+            //video answer: using the .Take() method return back number of elements specified in take method
+            // var firstFour = asc.Take(4);     will return the first four numbers starting in ascending order
+
             var orderedNumbers = numbers.OrderBy(x => x).ToList();
             //create an index outside foreach loop
             int index = 0;
@@ -59,6 +64,7 @@ namespace LinqExercise
             }
 
             Console.WriteLine();
+
             //TODO: Change the value at index 4 to your age, then print the numbers in descending order
             numbers[4] = 44;
             numbers.OrderByDescending(x => x).ToList().ForEach(x => Console.WriteLine(x));
@@ -67,15 +73,29 @@ namespace LinqExercise
             var employees = CreateEmployees();
 
             //TODO: Print all the employees' FullName properties to the console only if their FirstName starts with a C OR an S and order this in ascending order by FirstName.
+            //using both accessing first element of the array and using .StartsWith method to access first element
+            employees.Where(x => x.FirstName[0] == 'C' || x.FirstName.StartsWith('S')).OrderBy(x => x.FirstName).ToList().ForEach(x => Console.WriteLine($"Filtered FirstName: {x.FirstName}"));
+
 
             //TODO: Print all the employees' FullName and Age who are over the age 26 to the console and order this by Age first and then by FirstName in the same result.
+            employees.Where(x => x.Age > 26).OrderBy(x => x.Age).OrderBy(x => x.FirstName).ToList().ForEach(x => Console.WriteLine($"Age: {x.Age} - FirstName: {x.FirstName}"));
 
             //TODO: Print the Sum of the employees' YearsOfExperience if their YOE is less than or equal to 10 AND Age is greater than 35.
+            var sumYearsExp = employees.Where(x => x.YearsOfExperience <= 10 && x.Age > 35).Sum(x => x.YearsOfExperience);
+            Console.WriteLine($"Total years experience: {sumYearsExp}");
 
             //TODO: Now print the Average of the employees' YearsOfExperience if their YOE is less than or equal to 10 AND Age is greater than 35.
+            var avgEmployeesYears = employees.Where(x => x.YearsOfExperience <= 10 && x.Age > 35).Average(x => x.YearsOfExperience);
+            Console.WriteLine($"Employees YOE average {avgEmployeesYears}");
 
             //TODO: Add an employee to the end of the list without using employees.Add()
-
+            //note that with the entire linq statement we need to add a .ToList() at the end to put it back in a list
+            //and IMPORTANT that we need to assign it back to the employees list variable so it stores it back
+            employees = employees.Append(new Employee("Mary", "Smith", 45, 10)).ToList();
+            foreach(Employee employee in employees)
+            {
+                Console.WriteLine(employee.FirstName);
+            }
 
             Console.WriteLine();
 
@@ -84,7 +104,7 @@ namespace LinqExercise
 
         #region CreateEmployeesMethod
         private static List<Employee> CreateEmployees()
-        {
+        {   //Firstname, Lastname, Age, YearExp
             List<Employee> employees = new List<Employee>();
             employees.Add(new Employee("Cruz", "Sanchez", 25, 10));
             employees.Add(new Employee("Steven", "Bustamento", 56, 5));
