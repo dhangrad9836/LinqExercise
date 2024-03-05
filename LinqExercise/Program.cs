@@ -21,18 +21,47 @@ namespace LinqExercise
              */
 
             //TODO: Print the Sum of numbers
+            var sum = numbers.Select(x => x).ToList().Sum();
+            Console.WriteLine(sum);
 
             //TODO: Print the Average of numbers
+            var avg = numbers.Select(x => x).ToList().Average();
+            Console.WriteLine(avg);
 
             //TODO: Order numbers in ascending order and print to the console
+            numbers.OrderBy(x => x).ToList().ForEach(x => Console.WriteLine(x));
 
+            Console.WriteLine();
             //TODO: Order numbers in descending order and print to the console
+            numbers.OrderByDescending(x => x).ToList().ForEach(x => Console.WriteLine(x));
 
+            Console.WriteLine();
             //TODO: Print to the console only the numbers greater than 6
+            numbers.Where(x => x > 6).ToList().ForEach(x => Console.WriteLine(x));
 
+            Console.WriteLine("Ordered numbers");
             //TODO: Order numbers in any order (ascending or desc) but only print 4 of them **foreach loop only!**
+            var orderedNumbers = numbers.OrderBy(x => x).ToList();
+            //create an index outside foreach loop
+            int index = 0;
+            foreach (var x in orderedNumbers)
+            {   
+                if (index == 4)
+                {
+                    break;
+                }
+                else
+                {
+                    Console.WriteLine(x);
+                }
+                //increment the index inside the foreach loop
+                index++;
+            }
 
+            Console.WriteLine();
             //TODO: Change the value at index 4 to your age, then print the numbers in descending order
+            numbers[4] = 44;
+            numbers.OrderByDescending(x => x).ToList().ForEach(x => Console.WriteLine(x));
 
             // List of employees ****Do not remove this****
             var employees = CreateEmployees();
